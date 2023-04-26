@@ -619,13 +619,13 @@ type ListAsyncResultsResponse struct {
 	ID     int64 `json:"id"`
 	Result struct {
 		AsyncHandles []struct {
-			AsyncResultID  int64                  `json:"asyncResultID"`
-			Completed      bool                   `json:"completed"`
-			CreateTime     string                 `json:"createTime"`
-			Data           map[string]interface{} `json:"data"`
-			LastUpdateTime string                 `json:"lastUpdateTime"`
-			ResultType     string                 `json:"resultType"`
-			Success        bool                   `json:"success"`
+			AsyncResultID  int64          `json:"asyncResultID"`
+			Completed      bool           `json:"completed"`
+			CreateTime     string         `json:"createTime"`
+			Data           map[string]any `json:"data"`
+			LastUpdateTime string         `json:"lastUpdateTime"`
+			ResultType     string         `json:"resultType"`
+			Success        bool           `json:"success"`
 		} `json:"asyncHandles"`
 	} `json:"result"`
 }
