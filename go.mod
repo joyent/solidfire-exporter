@@ -1,6 +1,6 @@
 module github.com/MCBrandenburg/solidfire-exporter
 
-go 1.20
+go 1.18
 
 require (
 	github.com/K-Phoen/grabana v0.16.3
