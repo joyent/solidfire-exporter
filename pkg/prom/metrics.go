@@ -985,7 +985,7 @@ func NewMetricDescriptions(namespace string) *Descriptions {
 	d.AsyncResults = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "cluster_volume_async_result_count"),
 		"The total number of active async results in cluster",
-		nil,
+		[]string{"status", "completed", "success"},
 		nil,
 	)
 
