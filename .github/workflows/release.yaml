@@ -1,17 +1,17 @@
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  
+
 on: release
 name: Build
 jobs:
   release-linux-arm64:
-      name: release linux/arm64
-      runs-on: ubuntu-latest
-      steps:
+    name: release linux/arm64
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@master
       - name: compile and release
-        uses: mjavier2k/go-release.action@v1.1.2
+        uses: MCBrandenburg/go-release.action@v1.1.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GOARCH: arm64
@@ -24,113 +24,113 @@ jobs:
     name: release linux/386
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: compile and release
-      uses: mjavier2k/go-release.action@v1.1.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GOARCH: "386"
-        GOOS: linux
-        CGO_ENABLED: "0"  
-        EXECUTABLE_NAME: "solidfire-exporter"
-        EXECUTABLE_PATH: "./cmd/solidfire-exporter"
-        PACKAGE: "./cmd/solidfire-exporter/main.go"
+      - uses: actions/checkout@master
+      - name: compile and release
+        uses: MCBrandenburg/go-release.action@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GOARCH: "386"
+          GOOS: linux
+          CGO_ENABLED: "0"
+          EXECUTABLE_NAME: "solidfire-exporter"
+          EXECUTABLE_PATH: "./cmd/solidfire-exporter"
+          PACKAGE: "./cmd/solidfire-exporter/main.go"
   release-linux-amd64:
     name: release linux/amd64
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: compile and release
-      uses: mjavier2k/go-release.action@v1.1.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GOARCH: amd64
-        GOOS: linux
-        CGO_ENABLED: "0"
-        EXECUTABLE_NAME: "solidfire-exporter"
-        EXECUTABLE_PATH: "./cmd/solidfire-exporter"
-        PACKAGE: "./cmd/solidfire-exporter/main.go"
+      - uses: actions/checkout@master
+      - name: compile and release
+        uses: MCBrandenburg/go-release.action@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GOARCH: amd64
+          GOOS: linux
+          CGO_ENABLED: "0"
+          EXECUTABLE_NAME: "solidfire-exporter"
+          EXECUTABLE_PATH: "./cmd/solidfire-exporter"
+          PACKAGE: "./cmd/solidfire-exporter/main.go"
   release-darwin-386:
     name: release darwin/386
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: compile and release
-      uses: mjavier2k/go-release.action@v1.1.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GOARCH: "386"
-        GOOS: darwin
-        CGO_ENABLED: "0" 
-        EXECUTABLE_NAME: "solidfire-exporter"
-        EXECUTABLE_PATH: "./cmd/solidfire-exporter"
-        PACKAGE: "./cmd/solidfire-exporter/main.go"
+      - uses: actions/checkout@master
+      - name: compile and release
+        uses: MCBrandenburg/go-release.action@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GOARCH: "386"
+          GOOS: darwin
+          CGO_ENABLED: "0"
+          EXECUTABLE_NAME: "solidfire-exporter"
+          EXECUTABLE_PATH: "./cmd/solidfire-exporter"
+          PACKAGE: "./cmd/solidfire-exporter/main.go"
   release-darwin-amd64:
     name: release darwin/amd64
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: compile and release
-      uses: mjavier2k/go-release.action@v1.1.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GOARCH: amd64
-        GOOS: darwin
-        CGO_ENABLED: "0"
-        EXECUTABLE_NAME: "solidfire-exporter"
-        EXECUTABLE_PATH: "./cmd/solidfire-exporter"
-        PACKAGE: "./cmd/solidfire-exporter/main.go"
+      - uses: actions/checkout@master
+      - name: compile and release
+        uses: MCBrandenburg/go-release.action@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GOARCH: amd64
+          GOOS: darwin
+          CGO_ENABLED: "0"
+          EXECUTABLE_NAME: "solidfire-exporter"
+          EXECUTABLE_PATH: "./cmd/solidfire-exporter"
+          PACKAGE: "./cmd/solidfire-exporter/main.go"
   release-windows-386:
     name: release windows/386
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: compile and release
-      uses: mjavier2k/go-release.action@v1.1.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GOARCH: "386"
-        GOOS: windows
-        CGO_ENABLED: "0"
-        EXECUTABLE_NAME: "solidfire-exporter"
-        EXECUTABLE_PATH: "./cmd/solidfire-exporter"
-        PACKAGE: "./cmd/solidfire-exporter/main.go"
+      - uses: actions/checkout@master
+      - name: compile and release
+        uses: MCBrandenburg/go-release.action@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GOARCH: "386"
+          GOOS: windows
+          CGO_ENABLED: "0"
+          EXECUTABLE_NAME: "solidfire-exporter"
+          EXECUTABLE_PATH: "./cmd/solidfire-exporter"
+          PACKAGE: "./cmd/solidfire-exporter/main.go"
   release-windows-amd64:
     name: release windows/amd64
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: compile and release
-      uses: mjavier2k/go-release.action@v1.1.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GOARCH: amd64
-        GOOS: windows
-        CGO_ENABLED: "0"
-        EXECUTABLE_NAME: "solidfire-exporter"
-        EXECUTABLE_PATH: "./cmd/solidfire-exporter"
-        PACKAGE: "./cmd/solidfire-exporter/main.go"
+      - uses: actions/checkout@master
+      - name: compile and release
+        uses: MCBrandenburg/go-release.action@v1.1.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GOARCH: amd64
+          GOOS: windows
+          CGO_ENABLED: "0"
+          EXECUTABLE_NAME: "solidfire-exporter"
+          EXECUTABLE_PATH: "./cmd/solidfire-exporter"
+          PACKAGE: "./cmd/solidfire-exporter/main.go"
 
   push_to_registry:
-    name: Push Docker image 
+    name: Push Docker image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
+
       - name: Log in to the Container registry
         uses: docker/login-action@v1
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-        
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-            
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
