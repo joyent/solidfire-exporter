@@ -3,7 +3,7 @@ package testutils
 import (
 	"context"
 
-	"github.com/mjavier2k/solidfire-exporter/pkg/solidfire"
+	"github.com/MCBrandenburg/solidfire-exporter/pkg/solidfire"
 	"github.com/stretchr/testify/mock"
 )
 

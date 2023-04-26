@@ -10,9 +10,9 @@ import (
 
 	"github.com/K-Phoen/grabana"
 	"github.com/K-Phoen/grabana/dashboard"
-	"github.com/mjavier2k/solidfire-exporter/cmd/dashboards/cluster"
-	"github.com/mjavier2k/solidfire-exporter/cmd/dashboards/node"
-	"github.com/mjavier2k/solidfire-exporter/cmd/dashboards/volume"
+	"github.com/MCBrandenburg/solidfire-exporter/cmd/dashboards/cluster"
+	"github.com/MCBrandenburg/solidfire-exporter/cmd/dashboards/node"
+	"github.com/MCBrandenburg/solidfire-exporter/cmd/dashboards/volume"
 )
 
 func main() {

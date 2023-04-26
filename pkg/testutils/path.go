@@ -3,7 +3,7 @@ package testutils
 import (
 	"path"
 
-	"github.com/mjavier2k/solidfire-exporter/pkg/solidfire"
+	"github.com/MCBrandenburg/solidfire-exporter/pkg/solidfire"
 )
 
 func ResolveFixturePath(basePath string, r solidfire.RPC) string {

@@ -9,8 +9,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/mjavier2k/solidfire-exporter/pkg/solidfire"
-	"github.com/mjavier2k/solidfire-exporter/pkg/testutils"
+	"github.com/MCBrandenburg/solidfire-exporter/pkg/solidfire"
+	"github.com/MCBrandenburg/solidfire-exporter/pkg/testutils"
 	"gopkg.in/h2non/gock.v1"
 )
 

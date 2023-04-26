@@ -11,7 +11,7 @@ import (
 	"github.com/K-Phoen/grabana/row"
 	"github.com/K-Phoen/grabana/singlestat"
 	"github.com/K-Phoen/grabana/target/prometheus"
-	"github.com/mjavier2k/solidfire-exporter/cmd/dashboards/common"
+	"github.com/MCBrandenburg/solidfire-exporter/cmd/dashboards/common"
 )
 
 func driveSingleStat(status, triggerColor string, span float32) row.Option {

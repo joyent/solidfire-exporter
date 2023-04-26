@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/MCBrandenburg/solidfire-exporter/pkg/solidfire"
 	log "github.com/amoghe/distillog"
-	"github.com/mjavier2k/solidfire-exporter/pkg/solidfire"
 	"golang.org/x/sync/errgroup"
 
 	"github.com/prometheus/client_golang/prometheus"
