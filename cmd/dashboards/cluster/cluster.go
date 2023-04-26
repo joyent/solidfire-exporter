@@ -12,7 +12,7 @@ import (
 	"github.com/K-Phoen/grabana/singlestat"
 	"github.com/K-Phoen/grabana/table"
 	"github.com/K-Phoen/grabana/target/prometheus"
-	"github.com/mjavier2k/solidfire-exporter/cmd/dashboards/common"
+	"github.com/MCBrandenburg/solidfire-exporter/cmd/dashboards/common"
 )
 
 func faultSingleStat(severity string, thresholds [2]string, colors [3]string) row.Option {

@@ -3,7 +3,7 @@ package prom_test
 import (
 	"testing"
 
-	"github.com/mjavier2k/solidfire-exporter/pkg/prom"
+	"github.com/MCBrandenburg/solidfire-exporter/pkg/prom"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

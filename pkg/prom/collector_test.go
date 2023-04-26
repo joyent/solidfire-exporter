@@ -11,9 +11,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mjavier2k/solidfire-exporter/pkg/prom"
-	"github.com/mjavier2k/solidfire-exporter/pkg/solidfire"
-	"github.com/mjavier2k/solidfire-exporter/pkg/testutils"
+	"github.com/MCBrandenburg/solidfire-exporter/pkg/prom"
+	"github.com/MCBrandenburg/solidfire-exporter/pkg/solidfire"
+	"github.com/MCBrandenburg/solidfire-exporter/pkg/testutils"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
