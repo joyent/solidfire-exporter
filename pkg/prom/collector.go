@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"math"
+	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -249,6 +250,9 @@ func (c *SolidfireCollector) collectVolumeStats(ctx context.Context, ch chan<- p
 	mu.Lock()
 	defer mu.Unlock()
 	for _, vol := range volumeStats.Result.VolumeStats {
+		if ok, _ := regexp.MatchString(`snapshot-clone-src-*|replica-vol-*`, c.volumeNamesByID[vol.VolumeID]); ok {
+			continue
+		}
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeActualIOPS,
 			prometheus.GaugeValue,
@@ -773,6 +777,9 @@ func (c *SolidfireCollector) collectVolumeQosHistograms(ctx context.Context, ch 
 	mu.Lock()
 	defer mu.Unlock()
 	for _, h := range VolumeQoSHistograms.Result.QosHistograms {
+		if ok, _ := regexp.MatchString(`snapshot-clone-src-*|replica-vol-*`, c.volumeNamesByID[h.VolumeID]); ok {
+			continue
+		}
 		// Below Min IOPS Percentage
 		BelowMinIopsPercentages := map[float64]uint64{
 			19:  h.Histograms.BelowMinIopsPercentages.Bucket1To19,
@@ -1267,6 +1274,9 @@ func (c *SolidfireCollector) collectISCSISessions(ctx context.Context, ch chan<-
 
 	for node, v := range sessions {
 		for vol, val := range v {
+			if ok, _ := regexp.MatchString(`snapshot-clone-src-*|replica-vol-*`, c.volumeNamesByID[vol]); ok {
+				continue
+			}
 			ch <- prometheus.MustNewConstMetric(
 				MetricDescriptions.NodeISCSISessions,
 				prometheus.GaugeValue,
