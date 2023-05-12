@@ -59,22 +59,16 @@ func (c *SolidfireCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- MetricDescriptions.VolumeLatencySeconds
 	ch <- MetricDescriptions.VolumeNonZeroBlocks
 	ch <- MetricDescriptions.VolumeReadBytesTotal
-	ch <- MetricDescriptions.VolumeLastSampleReadBytes
-	ch <- MetricDescriptions.VolumeReadLatencySeconds
 	ch <- MetricDescriptions.VolumeReadLatencySecondsTotal
 	ch <- MetricDescriptions.VolumeReadOpsTotal
-	ch <- MetricDescriptions.VolumeLastSampleReadOps
 	ch <- MetricDescriptions.VolumeThrottle
 	ch <- MetricDescriptions.VolumeUnalignedReadsTotal
 	ch <- MetricDescriptions.VolumeUnalignedWritesTotal
 	ch <- MetricDescriptions.VolumeSizeBytes
 	ch <- MetricDescriptions.VolumeUtilization
 	ch <- MetricDescriptions.VolumeWriteBytesTotal
-	ch <- MetricDescriptions.VolumeLastSampleWriteBytes
-	ch <- MetricDescriptions.VolumeWriteLatencySeconds
 	ch <- MetricDescriptions.VolumeWriteLatencyTotal
 	ch <- MetricDescriptions.VolumeWriteOpsTotal
-	ch <- MetricDescriptions.VolumeWriteOpsLastSample
 	ch <- MetricDescriptions.VolumeStatsZeroBlocks
 
 	ch <- MetricDescriptions.ClusterActiveBlockSpaceBytes
@@ -301,20 +295,6 @@ func (c *SolidfireCollector) collectVolumeStats(ctx context.Context, ch chan<- p
 			c.volumeNamesByID[vol.VolumeID])
 
 		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.VolumeLastSampleReadBytes,
-			prometheus.GaugeValue,
-			vol.ReadBytesLastSample,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
-
-		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.VolumeReadLatencySeconds,
-			prometheus.GaugeValue,
-			MicrosecondsToSeconds(vol.ReadLatencyUSec),
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
-
-		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeReadLatencySecondsTotal,
 			prometheus.CounterValue,
 			MicrosecondsToSeconds(vol.ReadLatencyUSecTotal),
@@ -325,13 +305,6 @@ func (c *SolidfireCollector) collectVolumeStats(ctx context.Context, ch chan<- p
 			MetricDescriptions.VolumeReadOpsTotal,
 			prometheus.CounterValue,
 			vol.ReadOps,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
-
-		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.VolumeLastSampleReadOps,
-			prometheus.GaugeValue,
-			vol.ReadOpsLastSample,
 			strconv.Itoa(vol.VolumeID),
 			c.volumeNamesByID[vol.VolumeID])
 
@@ -378,20 +351,6 @@ func (c *SolidfireCollector) collectVolumeStats(ctx context.Context, ch chan<- p
 			c.volumeNamesByID[vol.VolumeID])
 
 		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.VolumeLastSampleWriteBytes,
-			prometheus.GaugeValue,
-			vol.WriteBytesLastSample,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
-
-		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.VolumeWriteLatencySeconds,
-			prometheus.GaugeValue,
-			MicrosecondsToSeconds(vol.WriteLatencyUSec),
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
-
-		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeWriteLatencyTotal,
 			prometheus.CounterValue,
 			MicrosecondsToSeconds(vol.WriteLatencyUSecTotal),
@@ -402,13 +361,6 @@ func (c *SolidfireCollector) collectVolumeStats(ctx context.Context, ch chan<- p
 			MetricDescriptions.VolumeWriteOpsTotal,
 			prometheus.CounterValue,
 			vol.WriteOps,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
-
-		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.VolumeWriteOpsLastSample,
-			prometheus.GaugeValue,
-			vol.WriteOpsLastSample,
 			strconv.Itoa(vol.VolumeID),
 			c.volumeNamesByID[vol.VolumeID])
 

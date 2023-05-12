@@ -150,12 +150,6 @@ solidfire_volume_client_queue_depth{volume_id="1",volume_name="test-volume1"} 0
 solidfire_volume_client_queue_depth{volume_id="2",volume_name="test-volume2"} 0
 solidfire_cluster_volume_count{status="active"} 2
 solidfire_cluster_volume_virtual_volume_task_count 1
-solidfire_volume_last_sample_read_bytes{volume_id="1",volume_name="test-volume1"} 0
-solidfire_volume_last_sample_read_bytes{volume_id="2",volume_name="test-volume2"} 0
-solidfire_volume_last_sample_read_ops{volume_id="1",volume_name="test-volume1"} 0
-solidfire_volume_last_sample_read_ops{volume_id="2",volume_name="test-volume2"} 0
-solidfire_volume_last_sample_write_bytes{volume_id="1",volume_name="test-volume1"} 0
-solidfire_volume_last_sample_write_bytes{volume_id="2",volume_name="test-volume2"} 0
 solidfire_volume_latency_seconds{volume_id="1",volume_name="test-volume1"} 0
 solidfire_volume_latency_seconds{volume_id="2",volume_name="test-volume2"} 0
 solidfire_volume_non_zero_blocks{volume_id="1",volume_name="test-volume1"} 165133
@@ -262,8 +256,6 @@ solidfire_volume_qos_write_block_sizes_bytes_sum{volume_id="2",volume_name="test
 solidfire_volume_qos_write_block_sizes_bytes_count{volume_id="2",volume_name="test-volume2"} 0
 solidfire_volume_read_bytes_total{volume_id="1",volume_name="test-volume1"} 4.5445102592e+10
 solidfire_volume_read_bytes_total{volume_id="2",volume_name="test-volume2"} 0
-solidfire_volume_read_latency_seconds{volume_id="1",volume_name="test-volume1"} 0
-solidfire_volume_read_latency_seconds{volume_id="2",volume_name="test-volume2"} 0
 solidfire_volume_read_latency_seconds_total{volume_id="1",volume_name="test-volume1"} 0
 solidfire_volume_read_latency_seconds_total{volume_id="2",volume_name="test-volume2"} 0
 solidfire_volume_read_ops_total{volume_id="1",volume_name="test-volume1"} 1.109215e+07
@@ -280,12 +272,8 @@ solidfire_volume_utilization{volume_id="1",volume_name="test-volume1"} 0
 solidfire_volume_utilization{volume_id="2",volume_name="test-volume2"} 0
 solidfire_volume_write_bytes_total{volume_id="1",volume_name="test-volume1"} 1.21720639488e+11
 solidfire_volume_write_bytes_total{volume_id="2",volume_name="test-volume2"} 0
-solidfire_volume_write_latency_seconds{volume_id="1",volume_name="test-volume1"} 0
-solidfire_volume_write_latency_seconds{volume_id="2",volume_name="test-volume2"} 0
 solidfire_volume_write_latency_seconds_total{volume_id="1",volume_name="test-volume1"} 0
 solidfire_volume_write_latency_seconds_total{volume_id="2",volume_name="test-volume2"} 0
-solidfire_volume_write_ops_last_sample{volume_id="1",volume_name="test-volume1"} 0
-solidfire_volume_write_ops_last_sample{volume_id="2",volume_name="test-volume2"} 0
 solidfire_volume_write_ops_total{volume_id="1",volume_name="test-volume1"} 1.3089387e+07
 solidfire_volume_write_ops_total{volume_id="2",volume_name="test-volume2"} 0
 solidfire_volume_zero_blocks{volume_id="1",volume_name="test-volume1"} 323315

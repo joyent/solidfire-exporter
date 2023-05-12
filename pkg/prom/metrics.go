@@ -13,13 +13,9 @@ type Descriptions struct {
 	VolumeAverageIOPSizeBytes     *prometheus.Desc
 	VolumeBurstIOPSCredit         *prometheus.Desc
 	VolumeClientQueueDepth        *prometheus.Desc
-	VolumeLastSampleReadBytes     *prometheus.Desc
-	VolumeLastSampleReadOps       *prometheus.Desc
-	VolumeLastSampleWriteBytes    *prometheus.Desc
 	VolumeLatencySeconds          *prometheus.Desc
 	VolumeNonZeroBlocks           *prometheus.Desc
 	VolumeReadBytesTotal          *prometheus.Desc
-	VolumeReadLatencySeconds      *prometheus.Desc
 	VolumeReadLatencySecondsTotal *prometheus.Desc
 	VolumeReadOpsTotal            *prometheus.Desc
 	VolumeThrottle                *prometheus.Desc
@@ -28,9 +24,7 @@ type Descriptions struct {
 	VolumeSizeBytes               *prometheus.Desc
 	VolumeUtilization             *prometheus.Desc
 	VolumeWriteBytesTotal         *prometheus.Desc
-	VolumeWriteLatencySeconds     *prometheus.Desc
 	VolumeWriteLatencyTotal       *prometheus.Desc
-	VolumeWriteOpsLastSample      *prometheus.Desc
 	VolumeWriteOpsTotal           *prometheus.Desc
 	VolumeStatsZeroBlocks         *prometheus.Desc
 
@@ -209,20 +203,6 @@ func NewMetricDescriptions(namespace string) *Descriptions {
 		nil,
 	)
 
-	d.VolumeLastSampleReadBytes = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "", "volume_last_sample_read_bytes"),
-		"The total number of bytes read from the volume during the last sample period.",
-		[]string{"volume_id", "volume_name"},
-		nil,
-	)
-
-	d.VolumeReadLatencySeconds = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "", "volume_read_latency_seconds"),
-		"The average time, in seconds, to complete read operations to the volume in the last 500 milliseconds.",
-		[]string{"volume_id", "volume_name"},
-		nil,
-	)
-
 	d.VolumeReadLatencySecondsTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_read_latency_seconds_total"),
 		"The total time spent performing read operations from the volume",
@@ -233,13 +213,6 @@ func NewMetricDescriptions(namespace string) *Descriptions {
 	d.VolumeReadOpsTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_read_ops_total"),
 		"The total read operations to the volume since the creation of the volume.",
-		[]string{"volume_id", "volume_name"},
-		nil,
-	)
-
-	d.VolumeLastSampleReadOps = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "", "volume_last_sample_read_ops"),
-		"The total number of read operations during the last sample period",
 		[]string{"volume_id", "volume_name"},
 		nil,
 	)
@@ -286,20 +259,6 @@ func NewMetricDescriptions(namespace string) *Descriptions {
 		nil,
 	)
 
-	d.VolumeLastSampleWriteBytes = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "", "volume_last_sample_write_bytes"),
-		"The total number of bytes written to the volume during the last sample period.",
-		[]string{"volume_id", "volume_name"},
-		nil,
-	)
-
-	d.VolumeWriteLatencySeconds = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "", "volume_write_latency_seconds"),
-		"The average time, in seconds, to complete write operations to a volume in the last 500 milliseconds.",
-		[]string{"volume_id", "volume_name"},
-		nil,
-	)
-
 	d.VolumeWriteLatencyTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_write_latency_seconds_total"),
 		"The total time spent performing write operations to the volume",
@@ -310,13 +269,6 @@ func NewMetricDescriptions(namespace string) *Descriptions {
 	d.VolumeWriteOpsTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_write_ops_total"),
 		"The total cumulative write operations to the volume since the creation of the volume.",
-		[]string{"volume_id", "volume_name"},
-		nil,
-	)
-
-	d.VolumeWriteOpsLastSample = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "", "volume_write_ops_last_sample"),
-		"The total number of write operations during the last sample period.",
 		[]string{"volume_id", "volume_name"},
 		nil,
 	)
