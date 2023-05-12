@@ -113,10 +113,8 @@ func (c *SolidfireCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- MetricDescriptions.NodeInterfaceOutBytesTotal
 	ch <- MetricDescriptions.NodeInterfaceUtilizationPercentage
 	ch <- MetricDescriptions.NodeReadLatencyTotal
-	ch <- MetricDescriptions.NodeReadOpsTotal
 	ch <- MetricDescriptions.NodeUsedMemoryBytes
 	ch <- MetricDescriptions.NodeWriteLatencyTotal
-	ch <- MetricDescriptions.NodeWriteOpsTotal
 	ch <- MetricDescriptions.NodeLoadHistogram
 
 	ch <- MetricDescriptions.NodeInfo
@@ -717,14 +715,6 @@ func (c *SolidfireCollector) collectClusterNodeStats(ctx context.Context, ch cha
 		)
 
 		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.NodeReadOpsTotal,
-			prometheus.CounterValue,
-			stats.ReadOps,
-			strconv.Itoa(stats.NodeID),
-			c.nodesNamesByID[stats.NodeID],
-		)
-
-		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.NodeInterfaceInBytesTotal,
 			prometheus.CounterValue,
 			stats.SBytesIn,
@@ -758,13 +748,6 @@ func (c *SolidfireCollector) collectClusterNodeStats(ctx context.Context, ch cha
 			c.nodesNamesByID[stats.NodeID],
 		)
 
-		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.NodeWriteOpsTotal,
-			prometheus.CounterValue,
-			stats.WriteOps,
-			strconv.Itoa(stats.NodeID),
-			c.nodesNamesByID[stats.NodeID],
-		)
 	}
 	return nil
 }

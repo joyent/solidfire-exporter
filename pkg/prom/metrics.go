@@ -82,12 +82,10 @@ type Descriptions struct {
 	NodeInterfaceUtilizationPercentage *prometheus.Desc
 	NodeLoadHistogram                  *prometheus.Desc
 	NodeReadLatencyTotal               *prometheus.Desc
-	NodeReadOpsTotal                   *prometheus.Desc
 	NodeSamples                        *prometheus.Desc
 	NodeTotalMemoryBytes               *prometheus.Desc
 	NodeUsedMemoryBytes                *prometheus.Desc
 	NodeWriteLatencyTotal              *prometheus.Desc
-	NodeWriteOpsTotal                  *prometheus.Desc
 
 	// ListAllNodes
 	NodeInfo *prometheus.Desc
@@ -540,20 +538,6 @@ func NewMetricDescriptions(namespace string) *Descriptions {
 	d.NodeReadLatencyTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "node_read_latency_seconds_total"),
 		"The total time spent performing read operations since the creation of the cluster.",
-		[]string{"node_id", "node_name"},
-		nil,
-	)
-
-	d.NodeReadOpsTotal = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "", "node_read_ops_total"),
-		"Total read operations to a node.", // undocumented metric
-		[]string{"node_id", "node_name"},
-		nil,
-	)
-
-	d.NodeWriteOpsTotal = prometheus.NewDesc(
-		prometheus.BuildFQName(namespace, "", "node_write_ops_total"),
-		"Total write operations to a node", // undocumented metric
 		[]string{"node_id", "node_name"},
 		nil,
 	)

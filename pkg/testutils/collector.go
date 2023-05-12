@@ -135,12 +135,10 @@ solidfire_node_load_bucket{node_id="1",node_name="n01",le="+Inf"} 294
 solidfire_node_load_sum{node_id="1",node_name="n01"} 7.0053e+06
 solidfire_node_load_count{node_id="1",node_name="n01"} 294
 solidfire_node_read_latency_seconds_total{node_id="1",node_name="n01"} 0
-solidfire_node_read_ops_total{node_id="1",node_name="n01"} 1.109215e+07
 solidfire_node_samples{node_id="1",node_name="n01"} 294
 solidfire_node_total_memory_bytes{node_id="1",node_name="n01"} 1.6e+10
 solidfire_node_used_memory_bytes{node_id="1",node_name="n01"} 9.000198144e+09
 solidfire_node_write_latency_seconds_total{node_id="1",node_name="n01"} 0
-solidfire_node_write_ops_total{node_id="1",node_name="n01"} 1.3089387e+07
 solidfire_up 1
 solidfire_volume_actual_iops{volume_id="1",volume_name="test-volume1"} 0
 solidfire_volume_actual_iops{volume_id="2",volume_name="test-volume2"} 0
@@ -431,12 +429,10 @@ solidfire_node_load_bucket{node_id="1",node_name="n01",le="+Inf"} 294
 solidfire_node_load_sum{node_id="1",node_name="n01"} 7.0053e+06
 solidfire_node_load_count{node_id="1",node_name="n01"} 294
 solidfire_node_read_latency_seconds_total{node_id="1",node_name="n01"} 0
-solidfire_node_read_ops_total{node_id="1",node_name="n01"} 1.109215e+07
 solidfire_node_samples{node_id="1",node_name="n01"} 294
 solidfire_node_total_memory_bytes{node_id="1",node_name="n01"} 1.6e+10
 solidfire_node_used_memory_bytes{node_id="1",node_name="n01"} 9.000198144e+09
 solidfire_node_write_latency_seconds_total{node_id="1",node_name="n01"} 0
-solidfire_node_write_ops_total{node_id="1",node_name="n01"} 1.3089387e+07
 solidfire_up 0
 solidfire_cluster_volume_count{status="active"} 2
 solidfire_cluster_volume_virtual_volume_task_count 1
