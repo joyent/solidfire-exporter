@@ -121,20 +121,15 @@ docker run  --rm -p 9987:9987 ghcr.io/mjavier2k/solidfire-exporter:v0.6.6
 | solidfire_node_interface_utilization_percentage | gauge | Network interface utilization (in percent) of network interface. |
 | solidfire_node_load | histogram | System load histogram |
 | solidfire_node_read_latency_seconds_total | counter | The total time spent performing read operations since the creation of the cluster. |
-| solidfire_node_read_ops_total | counter | Total read operations to a node. |
 | solidfire_node_samples | gauge | Node stat sample count |
 | solidfire_node_total_memory_bytes | gauge | Total node memory in bytes. |
 | solidfire_node_used_memory_bytes | gauge | Total node memory used in bytes. |
 | solidfire_node_write_latency_seconds_total | counter | The total time spent performing write operations since the creation of the cluster. |
-| solidfire_node_write_ops_total | counter | Total write operations to a node. |
 | solidfire_up | gauge | Whether last scrape against Solidfire API was successful |
 | solidfire_volume_actual_iops | gauge | The current actual IOPS to the volume in the last 500 milliseconds |
 | solidfire_volume_average_iop_size_bytes | gauge | The average size in bytes of recent I/O to the volume in the last 500 milliseconds |
 | solidfire_volume_burst_iops_credit | gauge | The total number of IOP credits available to the user. When volumes are not using up to the configured maxIOPS, credits are accrued. |
 | solidfire_volume_client_queue_depth | gauge | The number of outstanding read and write operations to the volume. |
-| solidfire_volume_last_sample_read_bytes | gauge | The total number of bytes read from the volume during the last sample period. |
-| solidfire_volume_last_sample_read_ops | gauge | The total number of read operations during the last sample period |
-| solidfire_volume_last_sample_write_bytes | gauge | The total number of bytes written to the volume during the last sample period. |
 | solidfire_volume_latency_seconds | gauge | The average time, in seconds, to complete operations to the volume in the last 500 milliseconds. A '0' (zero) value means there is no I/O to the volume. |
 | solidfire_volume_non_zero_blocks | gauge | The total number of 4KiB blocks that contain data after the last garbage collection operation has completed. |
 | solidfire_volume_qos_below_min_iops_percentage | histogram | Volume QoS Below minimum IOPS percentage |
@@ -144,7 +139,6 @@ docker run  --rm -p 9987:9987 ghcr.io/mjavier2k/solidfire-exporter:v0.6.6
 | solidfire_volume_qos_throttle_percentage | histogram | Volume QoS throttle percentage |
 | solidfire_volume_qos_write_block_sizes_bytes_bucket | histogram | Volume QoS write block sizes |
 | solidfire_volume_read_bytes_total | counter | The total cumulative bytes read from the volume since the creation of the volume. |
-| solidfire_volume_read_latency_seconds | gauge | The average time, in seconds, to complete read operations to the volume in the last 500 milliseconds. |
 | solidfire_volume_read_latency_seconds_total | counter | The total time spent performing read operations from the volume |
 | solidfire_volume_read_ops_total | counter | The total read operations to the volume since the creation of the volume. |
 | solidfire_volume_size_bytes | gauge | Total provisioned capacity in bytes. |
@@ -153,9 +147,7 @@ docker run  --rm -p 9987:9987 ghcr.io/mjavier2k/solidfire-exporter:v0.6.6
 | solidfire_volume_unaligned_writes_total | counter | The total cumulative unaligned write operations to a volume since the creation of the volume. |
 | solidfire_volume_utilization | gauge | A floating value that describes how much the client is using the volume. Value 0: The client is not using the volume. Value 1: The client is using their maximum. Value 1+: The client is using their burst. |
 | solidfire_volume_write_bytes_total | counter | The total cumulative bytes written to the volume since the creation of the volume. |
-| solidfire_volume_write_latency_seconds | gauge | The average time, in seconds, to complete write operations to a volume in the last 500 milliseconds. |
 | solidfire_volume_write_latency_seconds_total | counter | The total time spent performing write operations to the volume |
-| solidfire_volume_write_ops_last_sample | gauge | The total number of write operations during the last sample period. |
 | solidfire_volume_write_ops_total | counter | The total cumulative write operations to the volume since the creation of the volume. |
 | solidfire_volume_zero_blocks | gauge | The total number of empty 4KiB blocks without data after the last round of garbage collection operation has completed. |
 

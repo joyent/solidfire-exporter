@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"math"
+	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -58,22 +59,16 @@ func (c *SolidfireCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- MetricDescriptions.VolumeLatencySeconds
 	ch <- MetricDescriptions.VolumeNonZeroBlocks
 	ch <- MetricDescriptions.VolumeReadBytesTotal
-	ch <- MetricDescriptions.VolumeLastSampleReadBytes
-	ch <- MetricDescriptions.VolumeReadLatencySeconds
 	ch <- MetricDescriptions.VolumeReadLatencySecondsTotal
 	ch <- MetricDescriptions.VolumeReadOpsTotal
-	ch <- MetricDescriptions.VolumeLastSampleReadOps
 	ch <- MetricDescriptions.VolumeThrottle
 	ch <- MetricDescriptions.VolumeUnalignedReadsTotal
 	ch <- MetricDescriptions.VolumeUnalignedWritesTotal
 	ch <- MetricDescriptions.VolumeSizeBytes
 	ch <- MetricDescriptions.VolumeUtilization
 	ch <- MetricDescriptions.VolumeWriteBytesTotal
-	ch <- MetricDescriptions.VolumeLastSampleWriteBytes
-	ch <- MetricDescriptions.VolumeWriteLatencySeconds
 	ch <- MetricDescriptions.VolumeWriteLatencyTotal
 	ch <- MetricDescriptions.VolumeWriteOpsTotal
-	ch <- MetricDescriptions.VolumeWriteOpsLastSample
 	ch <- MetricDescriptions.VolumeStatsZeroBlocks
 
 	ch <- MetricDescriptions.ClusterActiveBlockSpaceBytes
@@ -112,10 +107,8 @@ func (c *SolidfireCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- MetricDescriptions.NodeInterfaceOutBytesTotal
 	ch <- MetricDescriptions.NodeInterfaceUtilizationPercentage
 	ch <- MetricDescriptions.NodeReadLatencyTotal
-	ch <- MetricDescriptions.NodeReadOpsTotal
 	ch <- MetricDescriptions.NodeUsedMemoryBytes
 	ch <- MetricDescriptions.NodeWriteLatencyTotal
-	ch <- MetricDescriptions.NodeWriteOpsTotal
 	ch <- MetricDescriptions.NodeLoadHistogram
 
 	ch <- MetricDescriptions.NodeInfo
@@ -249,6 +242,9 @@ func (c *SolidfireCollector) collectVolumeStats(ctx context.Context, ch chan<- p
 	mu.Lock()
 	defer mu.Unlock()
 	for _, vol := range volumeStats.Result.VolumeStats {
+		if ok, _ := regexp.MatchString(`snapshot-clone-src-*|replica-vol-*`, c.volumeNamesByID[vol.VolumeID]); ok {
+			continue
+		}
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeActualIOPS,
 			prometheus.GaugeValue,
@@ -299,20 +295,6 @@ func (c *SolidfireCollector) collectVolumeStats(ctx context.Context, ch chan<- p
 			c.volumeNamesByID[vol.VolumeID])
 
 		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.VolumeLastSampleReadBytes,
-			prometheus.GaugeValue,
-			vol.ReadBytesLastSample,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
-
-		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.VolumeReadLatencySeconds,
-			prometheus.GaugeValue,
-			MicrosecondsToSeconds(vol.ReadLatencyUSec),
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
-
-		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeReadLatencySecondsTotal,
 			prometheus.CounterValue,
 			MicrosecondsToSeconds(vol.ReadLatencyUSecTotal),
@@ -323,13 +305,6 @@ func (c *SolidfireCollector) collectVolumeStats(ctx context.Context, ch chan<- p
 			MetricDescriptions.VolumeReadOpsTotal,
 			prometheus.CounterValue,
 			vol.ReadOps,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
-
-		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.VolumeLastSampleReadOps,
-			prometheus.GaugeValue,
-			vol.ReadOpsLastSample,
 			strconv.Itoa(vol.VolumeID),
 			c.volumeNamesByID[vol.VolumeID])
 
@@ -376,20 +351,6 @@ func (c *SolidfireCollector) collectVolumeStats(ctx context.Context, ch chan<- p
 			c.volumeNamesByID[vol.VolumeID])
 
 		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.VolumeLastSampleWriteBytes,
-			prometheus.GaugeValue,
-			vol.WriteBytesLastSample,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
-
-		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.VolumeWriteLatencySeconds,
-			prometheus.GaugeValue,
-			MicrosecondsToSeconds(vol.WriteLatencyUSec),
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
-
-		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeWriteLatencyTotal,
 			prometheus.CounterValue,
 			MicrosecondsToSeconds(vol.WriteLatencyUSecTotal),
@@ -400,13 +361,6 @@ func (c *SolidfireCollector) collectVolumeStats(ctx context.Context, ch chan<- p
 			MetricDescriptions.VolumeWriteOpsTotal,
 			prometheus.CounterValue,
 			vol.WriteOps,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
-
-		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.VolumeWriteOpsLastSample,
-			prometheus.GaugeValue,
-			vol.WriteOpsLastSample,
 			strconv.Itoa(vol.VolumeID),
 			c.volumeNamesByID[vol.VolumeID])
 
@@ -713,14 +667,6 @@ func (c *SolidfireCollector) collectClusterNodeStats(ctx context.Context, ch cha
 		)
 
 		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.NodeReadOpsTotal,
-			prometheus.CounterValue,
-			stats.ReadOps,
-			strconv.Itoa(stats.NodeID),
-			c.nodesNamesByID[stats.NodeID],
-		)
-
-		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.NodeInterfaceInBytesTotal,
 			prometheus.CounterValue,
 			stats.SBytesIn,
@@ -754,13 +700,6 @@ func (c *SolidfireCollector) collectClusterNodeStats(ctx context.Context, ch cha
 			c.nodesNamesByID[stats.NodeID],
 		)
 
-		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.NodeWriteOpsTotal,
-			prometheus.CounterValue,
-			stats.WriteOps,
-			strconv.Itoa(stats.NodeID),
-			c.nodesNamesByID[stats.NodeID],
-		)
 	}
 	return nil
 }
@@ -773,6 +712,9 @@ func (c *SolidfireCollector) collectVolumeQosHistograms(ctx context.Context, ch 
 	mu.Lock()
 	defer mu.Unlock()
 	for _, h := range VolumeQoSHistograms.Result.QosHistograms {
+		if ok, _ := regexp.MatchString(`snapshot-clone-src-*|replica-vol-*`, c.volumeNamesByID[h.VolumeID]); ok {
+			continue
+		}
 		// Below Min IOPS Percentage
 		BelowMinIopsPercentages := map[float64]uint64{
 			19:  h.Histograms.BelowMinIopsPercentages.Bucket1To19,
@@ -1256,27 +1198,20 @@ func (c *SolidfireCollector) collectISCSISessions(ctx context.Context, ch chan<-
 	}
 	mu.Lock()
 	defer mu.Unlock()
-	sessions := make(map[int]map[int]float64)
+	sessions := make(map[int]float64)
 
 	for _, session := range ListISCSISessions.Result.Sessions {
-		if sessions[session.NodeID] == nil {
-			sessions[session.NodeID] = make(map[int]float64)
-		}
-		sessions[session.NodeID][session.VolumeID]++
+		sessions[session.NodeID]++
 	}
 
-	for node, v := range sessions {
-		for vol, val := range v {
-			ch <- prometheus.MustNewConstMetric(
-				MetricDescriptions.NodeISCSISessions,
-				prometheus.GaugeValue,
-				val,
-				strconv.Itoa(node),
-				c.nodesNamesByID[node],
-				strconv.Itoa(vol),
-				c.volumeNamesByID[vol],
-			)
-		}
+	for node, val := range sessions {
+		ch <- prometheus.MustNewConstMetric(
+			MetricDescriptions.NodeISCSISessions,
+			prometheus.GaugeValue,
+			val,
+			strconv.Itoa(node),
+			c.nodesNamesByID[node],
+		)
 	}
 	return nil
 }
