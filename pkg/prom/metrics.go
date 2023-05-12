@@ -916,7 +916,7 @@ func NewMetricDescriptions(namespace string) *Descriptions {
 	d.NodeISCSISessions = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "node_iscsi_sessions"),
 		"The total number of iscsi sessions per node and volume",
-		[]string{"node_id", "node_name", "volume_id", "volume_name"},
+		[]string{"node_id", "node_name"},
 		nil,
 	)
 

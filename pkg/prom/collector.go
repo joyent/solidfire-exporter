@@ -1246,30 +1246,20 @@ func (c *SolidfireCollector) collectISCSISessions(ctx context.Context, ch chan<-
 	}
 	mu.Lock()
 	defer mu.Unlock()
-	sessions := make(map[int]map[int]float64)
+	sessions := make(map[int]float64)
 
 	for _, session := range ListISCSISessions.Result.Sessions {
-		if sessions[session.NodeID] == nil {
-			sessions[session.NodeID] = make(map[int]float64)
-		}
-		sessions[session.NodeID][session.VolumeID]++
+		sessions[session.NodeID]++
 	}
 
-	for node, v := range sessions {
-		for vol, val := range v {
-			if ok, _ := regexp.MatchString(`snapshot-clone-src-*|replica-vol-*`, c.volumeNamesByID[vol]); ok {
-				continue
-			}
-			ch <- prometheus.MustNewConstMetric(
-				MetricDescriptions.NodeISCSISessions,
-				prometheus.GaugeValue,
-				val,
-				strconv.Itoa(node),
-				c.nodesNamesByID[node],
-				strconv.Itoa(vol),
-				c.volumeNamesByID[vol],
-			)
-		}
+	for node, val := range sessions {
+		ch <- prometheus.MustNewConstMetric(
+			MetricDescriptions.NodeISCSISessions,
+			prometheus.GaugeValue,
+			val,
+			strconv.Itoa(node),
+			c.nodesNamesByID[node],
+		)
 	}
 	return nil
 }

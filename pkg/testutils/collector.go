@@ -124,7 +124,7 @@ solidfire_node_interface_out_bytes_total{interface="management",node_id="1",node
 solidfire_node_interface_out_bytes_total{interface="storage",node_id="1",node_name="n01"} 59773
 solidfire_node_interface_utilization_percentage{interface="cluster",node_id="1",node_name="n01"} 0
 solidfire_node_interface_utilization_percentage{interface="storage",node_id="1",node_name="n01"} 0
-solidfire_node_iscsi_sessions{node_id="1",node_name="n01",volume_id="1",volume_name="test-volume1"} 1
+solidfire_node_iscsi_sessions{node_id="1",node_name="n01"} 1
 solidfire_node_load_bucket{node_id="1",node_name="n01",le="0"} 1.205996e+06
 solidfire_node_load_bucket{node_id="1",node_name="n01",le="19"} 4.606744e+06
 solidfire_node_load_bucket{node_id="1",node_name="n01",le="39"} 1.192471e+06
@@ -418,7 +418,7 @@ solidfire_node_interface_out_bytes_total{interface="management",node_id="1",node
 solidfire_node_interface_out_bytes_total{interface="storage",node_id="1",node_name="n01"} 59773
 solidfire_node_interface_utilization_percentage{interface="cluster",node_id="1",node_name="n01"} 0
 solidfire_node_interface_utilization_percentage{interface="storage",node_id="1",node_name="n01"} 0
-solidfire_node_iscsi_sessions{node_id="1",node_name="n01",volume_id="1",volume_name="test-volume1"} 1
+solidfire_node_iscsi_sessions{node_id="1",node_name="n01"} 1
 solidfire_node_load_bucket{node_id="1",node_name="n01",le="0"} 1.205996e+06
 solidfire_node_load_bucket{node_id="1",node_name="n01",le="19"} 4.606744e+06
 solidfire_node_load_bucket{node_id="1",node_name="n01",le="39"} 1.192471e+06
