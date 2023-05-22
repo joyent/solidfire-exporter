@@ -47,6 +47,7 @@ docker run  --rm -p 9987:9987 ghcr.io/mjavier2k/solidfire-exporter:v0.6.6
 |-|-|-|
 | solidfire_cluster_active_block_space_bytes | gauge | The amount of space on the block drives. This includes additional information such as metadata entries and space which can be cleaned up. |
 | solidfire_cluster_active_sessions | gauge | The number of active iSCSI sessions communicating with the cluster. |
+| solidfire_cluster_async_result_count | counter | The total number of active async results in cluster. | 
 | solidfire_cluster_average_io_bytes | gauge | Average size in bytes of recent I/O to the cluster in the last 500 milliseconds. |
 | solidfire_cluster_average_iops | gauge | The average IOPS for the cluster since midnight Coordinated Universal Time (UTC) |
 | solidfire_cluster_block_fullness | gauge | The current computed level of block fullness of the cluster. |
