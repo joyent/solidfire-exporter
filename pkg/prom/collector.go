@@ -1292,27 +1292,25 @@ func (c *SolidfireCollector) collectBulkVolumeJobs(ctx context.Context, ch chan<
 }
 
 func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- prometheus.Metric) error {
-	m := make(map[string]int64)
 	ar, err := c.client.ListAsyncResults(ctx)
 	if err != nil {
 		return err
 	}
 
-	activeJobs := make(map[string]int64)
+	m := make(map[string]int64)
 	for _, v := range ar.Result.AsyncHandles {
-		m[fmt.Sprintf("%s:%t:%t", v.ResultType, v.Completed, v.Success)]++
 		if !v.Completed && !v.Success {
-			activeJobs[v.ResultType]++
+			m[v.ResultType]++
 		}
 	}
 
 	mu.Lock()
 	defer mu.Unlock()
 
-	for k, v := range activeJobs {
+	for k, v := range m {
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.AsyncResultsActive,
-			prometheus.CounterValue,
+			prometheus.GaugeValue,
 			float64(v),
 			k,
 		)
