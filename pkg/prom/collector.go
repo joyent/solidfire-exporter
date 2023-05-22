@@ -168,6 +168,7 @@ func (c *SolidfireCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- MetricDescriptions.VirtualVolumeTasks
 	ch <- MetricDescriptions.BulkVolumeJobs
 	ch <- MetricDescriptions.AsyncResults
+	ch <- MetricDescriptions.AsyncResultsActive
 }
 
 func (c *SolidfireCollector) collectVolumeMeta(ctx context.Context, ch chan<- prometheus.Metric) error {
@@ -1297,8 +1298,13 @@ func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- 
 	if err != nil {
 		return err
 	}
+
+	activeJobs := make(map[string]int64)
 	for _, v := range ar.Result.AsyncHandles {
 		m[fmt.Sprintf("%s:%t:%t", v.ResultType, v.Completed, v.Success)]++
+		if !v.Completed && !v.Success {
+			activeJobs[v.ResultType]++
+		}
 	}
 
 	mu.Lock()
@@ -1313,6 +1319,15 @@ func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- 
 			ss[0],
 			ss[1],
 			ss[2],
+		)
+	}
+
+	for k, v := range activeJobs {
+		ch <- prometheus.MustNewConstMetric(
+			MetricDescriptions.AsyncResultsActive,
+			prometheus.CounterValue,
+			float64(v),
+			k,
 		)
 	}
 	return nil

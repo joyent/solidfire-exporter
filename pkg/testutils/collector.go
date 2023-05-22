@@ -79,6 +79,8 @@ solidfire_cluster_used_metadata_space_bytes 7.221248e+06
 solidfire_cluster_used_metadata_space_in_snapshots_bytes 7.221248e+06
 solidfire_cluster_used_space_bytes 3.47282402e+08
 solidfire_cluster_volume_access_group_count 1
+solidfire_cluster_volume_async_result_active{type="NotClone"} 1
+solidfire_cluster_volume_async_result_count{completed="false",success="false",type="NotClone"} 1
 solidfire_cluster_volume_async_result_count{completed="false",success="true",type="Clone"} 2
 solidfire_cluster_volume_async_result_count{completed="true",success="false",type="Clone"} 1
 solidfire_cluster_volume_async_result_count{completed="true",success="true",type="Clone"} 2
@@ -361,6 +363,8 @@ solidfire_cluster_used_metadata_space_bytes 7.221248e+06
 solidfire_cluster_used_metadata_space_in_snapshots_bytes 7.221248e+06
 solidfire_cluster_used_space_bytes 3.47282402e+08
 solidfire_cluster_volume_access_group_count 1
+solidfire_cluster_volume_async_result_active{type="NotClone"} 1
+solidfire_cluster_volume_async_result_count{completed="false",success="false",type="NotClone"} 1
 solidfire_cluster_volume_async_result_count{completed="false",success="true",type="Clone"} 2
 solidfire_cluster_volume_async_result_count{completed="true",success="false",type="Clone"} 1
 solidfire_cluster_volume_async_result_count{completed="true",success="true",type="Clone"} 2
