@@ -167,7 +167,6 @@ func (c *SolidfireCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- MetricDescriptions.VolumeAccessGroupCount
 	ch <- MetricDescriptions.VirtualVolumeTasks
 	ch <- MetricDescriptions.BulkVolumeJobs
-	ch <- MetricDescriptions.AsyncResults
 	ch <- MetricDescriptions.AsyncResultsActive
 }
 
@@ -1309,18 +1308,6 @@ func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- 
 
 	mu.Lock()
 	defer mu.Unlock()
-
-	for k, v := range m {
-		ss := strings.Split(k, ":")
-		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.AsyncResults,
-			prometheus.CounterValue,
-			float64(v),
-			ss[0],
-			ss[1],
-			ss[2],
-		)
-	}
 
 	for k, v := range activeJobs {
 		ch <- prometheus.MustNewConstMetric(
