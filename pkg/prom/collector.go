@@ -167,7 +167,7 @@ func (c *SolidfireCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- MetricDescriptions.VolumeAccessGroupCount
 	ch <- MetricDescriptions.VirtualVolumeTasks
 	ch <- MetricDescriptions.BulkVolumeJobs
-	ch <- MetricDescriptions.AsyncResults
+	ch <- MetricDescriptions.AsyncResultsActive
 }
 
 func (c *SolidfireCollector) collectVolumeMeta(ctx context.Context, ch chan<- prometheus.Metric) error {
@@ -1292,27 +1292,27 @@ func (c *SolidfireCollector) collectBulkVolumeJobs(ctx context.Context, ch chan<
 }
 
 func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- prometheus.Metric) error {
-	m := make(map[string]int64)
 	ar, err := c.client.ListAsyncResults(ctx)
 	if err != nil {
 		return err
 	}
+
+	m := make(map[string]int64)
 	for _, v := range ar.Result.AsyncHandles {
-		m[fmt.Sprintf("%s:%t:%t", v.ResultType, v.Completed, v.Success)]++
+		if !v.Completed && !v.Success {
+			m[v.ResultType]++
+		}
 	}
 
 	mu.Lock()
 	defer mu.Unlock()
 
 	for k, v := range m {
-		ss := strings.Split(k, ":")
 		ch <- prometheus.MustNewConstMetric(
-			MetricDescriptions.AsyncResults,
-			prometheus.CounterValue,
+			MetricDescriptions.AsyncResultsActive,
+			prometheus.GaugeValue,
 			float64(v),
-			ss[0],
-			ss[1],
-			ss[2],
+			k,
 		)
 	}
 	return nil

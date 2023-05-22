@@ -79,6 +79,19 @@
         "lastUpdateTime": "2016-01-01T22:45:43Z",
         "resultType": "NotClone",
         "success": true
+      },
+      {
+        "asyncResultID": 47,
+        "completed": false,
+        "createTime": "2016-01-01T22:29:19Z",
+        "data": {
+          "cloneID": 26,
+          "message": "Clone complete.",
+          "volumeID": 48
+        },
+        "lastUpdateTime": "2016-01-01T22:45:43Z",
+        "resultType": "NotClone",
+        "success": false
       }
     ]
   }
