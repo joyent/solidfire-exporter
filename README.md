@@ -47,7 +47,6 @@ docker run  --rm -p 9987:9987 ghcr.io/mjavier2k/solidfire-exporter:v0.6.6
 |-|-|-|
 | solidfire_cluster_active_block_space_bytes | gauge | The amount of space on the block drives. This includes additional information such as metadata entries and space which can be cleaned up. |
 | solidfire_cluster_active_sessions | gauge | The number of active iSCSI sessions communicating with the cluster. |
-| solidfire_cluster_async_result_count | counter | The total number of active async results in cluster. | 
 | solidfire_cluster_average_io_bytes | gauge | Average size in bytes of recent I/O to the cluster in the last 500 milliseconds. |
 | solidfire_cluster_average_iops | gauge | The average IOPS for the cluster since midnight Coordinated Universal Time (UTC) |
 | solidfire_cluster_block_fullness | gauge | The current computed level of block fullness of the cluster. |
@@ -107,6 +106,7 @@ docker run  --rm -p 9987:9987 ghcr.io/mjavier2k/solidfire-exporter:v0.6.6
 | solidfire_cluster_used_metadata_space_bytes | gauge | The total number of bytes on volume drives used to store metadata |
 | solidfire_cluster_used_metadata_space_in_snapshots_bytes | gauge | The number of bytes on volume drives used for storing unique data in snapshots. This number provides an estimate of how much metadata space would be regained by deleting all snapshots on the system |
 | solidfire_cluster_used_space_bytes | gauge | The total amount of space used by all block drives in the system |
+| solidfire_cluster_volume_async_result_count | counter | The total number of active async results in cluster. | 
 | solidfire_cluster_write_bytes_total | counter | The total cumulative bytes written to the cluster since the creation of the cluster |
 | solidfire_cluster_write_latency_seconds | gauge | The average time, in seconds, to complete write operations to a cluster in the last 500 milliseconds. |
 | solidfire_cluster_write_latency_seconds_total | counter | The total time spent performing write operations since the creation of the cluster. |
