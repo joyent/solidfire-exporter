@@ -1297,6 +1297,16 @@ func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- 
 		return err
 	}
 
+	if len(ar.Result.AsyncHandles) == 0 {
+		ch <- prometheus.MustNewConstMetric(
+			MetricDescriptions.AsyncResultsActive,
+			prometheus.GaugeValue,
+			float64(0),
+			"no async results",
+		)
+		return nil
+	}
+
 	m := make(map[string]int64)
 	for _, v := range ar.Result.AsyncHandles {
 		if !v.Completed && !v.Success {
