@@ -1297,6 +1297,9 @@ func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- 
 		return err
 	}
 
+	mu.Lock()
+	defer mu.Unlock()
+
 	if len(ar.Result.AsyncHandles) == 0 {
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.AsyncResultsActive,
@@ -1313,9 +1316,6 @@ func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- 
 			m[v.ResultType]++
 		}
 	}
-
-	mu.Lock()
-	defer mu.Unlock()
 
 	for k, v := range m {
 		ch <- prometheus.MustNewConstMetric(
