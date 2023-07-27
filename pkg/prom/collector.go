@@ -1304,9 +1304,15 @@ func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- 
 		}
 	}
 
+	types := []string{"DriveAdd", "BulkVolume", "Clone", "DriveRemoval", "RtfiPendingNode"}
+	for _, t := range types {
+		if _, ok := m[t]; !ok {
+			m[t] = 0
+		}
+	}
+
 	mu.Lock()
 	defer mu.Unlock()
-
 	for k, v := range m {
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.AsyncResultsActive,
