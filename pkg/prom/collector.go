@@ -1297,21 +1297,6 @@ func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- 
 		return err
 	}
 
-	mu.Lock()
-	defer mu.Unlock()
-
-	if len(ar.Result.AsyncHandles) == 0 {
-		for _, s := range []string{"DriveAdd", "BulkVolume", "Clone", "DriveRemoval", "RtfiPendingNode"} {
-			ch <- prometheus.MustNewConstMetric(
-				MetricDescriptions.AsyncResultsActive,
-				prometheus.GaugeValue,
-				float64(0),
-				s,
-			)
-		}
-		return nil
-	}
-
 	m := make(map[string]int64)
 	for _, v := range ar.Result.AsyncHandles {
 		if !v.Completed && !v.Success {
@@ -1319,6 +1304,15 @@ func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- 
 		}
 	}
 
+	types := []string{"DriveAdd", "BulkVolume", "Clone", "DriveRemoval", "RtfiPendingNode"}
+	for _, t := range types {
+		if _, ok := m[t]; !ok {
+			m[t] = 0
+		}
+	}
+
+	mu.Lock()
+	defer mu.Unlock()
 	for k, v := range m {
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.AsyncResultsActive,
