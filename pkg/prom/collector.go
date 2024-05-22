@@ -168,6 +168,8 @@ func (c *SolidfireCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- MetricDescriptions.VirtualVolumeTasks
 	ch <- MetricDescriptions.BulkVolumeJobs
 	ch <- MetricDescriptions.AsyncResultsActive
+	ch <- MetricDescriptions.AsyncResults
+	ch <- MetricDescriptions.MaxAsyncResultID
 }
 
 func (c *SolidfireCollector) collectVolumeMeta(ctx context.Context, ch chan<- prometheus.Metric) error {
@@ -1296,24 +1298,32 @@ func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- 
 	if err != nil {
 		return err
 	}
-
-	m := make(map[string]int64)
+	maxAsyncResultID := 0
+	activeAsyncResults := make(map[string]int64)
+	allAsyncResults := make(map[string]int64)
 	for _, v := range ar.Result.AsyncHandles {
+		allAsyncResults[v.ResultType]++
 		if !v.Completed && !v.Success {
-			m[v.ResultType]++
+			activeAsyncResults[v.ResultType]++
+		}
+		if v.AsyncResultID > int64(maxAsyncResultID) {
+			maxAsyncResultID = int(v.AsyncResultID)
 		}
 	}
 
 	types := []string{"DriveAdd", "BulkVolume", "Clone", "DriveRemoval", "RtfiPendingNode"}
 	for _, t := range types {
-		if _, ok := m[t]; !ok {
-			m[t] = 0
+		if _, ok := activeAsyncResults[t]; !ok {
+			activeAsyncResults[t] = 0
+		}
+		if _, ok := allAsyncResults[t]; !ok {
+			allAsyncResults[t] = 0
 		}
 	}
 
 	mu.Lock()
 	defer mu.Unlock()
-	for k, v := range m {
+	for k, v := range activeAsyncResults {
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.AsyncResultsActive,
 			prometheus.GaugeValue,
@@ -1321,6 +1331,19 @@ func (c *SolidfireCollector) collectAsyncResults(ctx context.Context, ch chan<- 
 			k,
 		)
 	}
+	for k, v := range allAsyncResults {
+		ch <- prometheus.MustNewConstMetric(
+			MetricDescriptions.AsyncResults,
+			prometheus.GaugeValue,
+			float64(v),
+			k,
+		)
+	}
+	ch <- prometheus.MustNewConstMetric(
+		MetricDescriptions.MaxAsyncResultID,
+		prometheus.GaugeValue,
+		float64(maxAsyncResultID),
+	)
 	return nil
 }
 
