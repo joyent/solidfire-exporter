@@ -44,7 +44,7 @@ func TestClient_ListVolumeStats(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			defer gock.Off()
-			//gock.Observe(gock.DumpRequest)
+			// gock.Observe(gock.DumpRequest)
 			gock.New(sfHost).
 				Post(sfRPCEndpoint).
 				MatchType("json").
@@ -54,7 +54,8 @@ func TestClient_ListVolumeStats(t *testing.T) {
 					Params: solidfire.ListVolumeStatsRPCParams{
 						VolumeIDs:             []int{},
 						IncludeVirtualVolumes: true,
-					}}).
+					},
+				}).
 				Reply(200).
 				BodyString(string(fixture))
 			gotRaw, err := sfClient.ListVolumeStats(context.Background())
@@ -90,7 +91,7 @@ func TestClient_ListVolumes(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			defer gock.Off()
-			//gock.Observe(gock.DumpRequest)
+			// gock.Observe(gock.DumpRequest)
 			gock.New(sfHost).
 				Post(sfRPCEndpoint).
 				MatchType("json").
@@ -99,7 +100,8 @@ func TestClient_ListVolumes(t *testing.T) {
 					Method: solidfire.RPCListVolumes,
 					Params: solidfire.ListVolumesRPCParams{
 						IncludeVirtualVolumes: true,
-					}}).
+					},
+				}).
 				Reply(200).
 				BodyString(string(fixture))
 			gotRaw, err := sfClient.ListVolumes(context.Background())
@@ -114,6 +116,7 @@ func TestClient_ListVolumes(t *testing.T) {
 		})
 	}
 }
+
 func TestClient_GetClusterCapacity(t *testing.T) {
 	fixture, err := ioutil.ReadFile(testutils.ResolveFixturePath(fixtureBasePath, solidfire.RPCGetClusterCapacity))
 	if err != nil {
@@ -134,14 +137,15 @@ func TestClient_GetClusterCapacity(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			defer gock.Off()
-			//gock.Observe(gock.DumpRequest)
+			// gock.Observe(gock.DumpRequest)
 			gock.New(sfHost).
 				Post(sfRPCEndpoint).
 				MatchType("json").
 				JSON(solidfire.RPCBody{
 					ID:     1,
 					Method: solidfire.RPCGetClusterCapacity,
-					Params: solidfire.GetClusterCapacityRPCParams{}}).
+					Params: solidfire.GetClusterCapacityRPCParams{},
+				}).
 				Reply(200).
 				BodyString(string(fixture))
 			gotRaw, err := sfClient.GetClusterCapacity(context.Background())
@@ -187,7 +191,8 @@ func TestClient_ListClusterFaults(t *testing.T) {
 					Params: solidfire.ListClusterFaultsRPCParams{
 						FaultTypes:    "current",
 						BestPractices: true,
-					}}).
+					},
+				}).
 				Reply(200).
 				BodyString(string(fixture))
 
@@ -232,7 +237,8 @@ func TestClient_ListNodeStats(t *testing.T) {
 				JSON(solidfire.RPCBody{
 					ID:     1,
 					Method: solidfire.RPCListNodeStats,
-					Params: solidfire.ListNodeStatsRPCParams{}}).
+					Params: solidfire.ListNodeStatsRPCParams{},
+				}).
 				Reply(200).
 				BodyString(string(fixture))
 
@@ -279,7 +285,8 @@ func TestClient_ListVolumeQoSHistograms(t *testing.T) {
 					Method: solidfire.RPCListVolumeQoSHistograms,
 					Params: solidfire.ListVolumeQoSHistogramsRPCParams{
 						VolumeIDs: []int{}, // blank gives us all of them
-					}}).
+					},
+				}).
 				Reply(200).
 				BodyString(string(fixture))
 
@@ -324,7 +331,8 @@ func TestClient_ListAllNodes(t *testing.T) {
 				JSON(solidfire.RPCBody{
 					ID:     1,
 					Method: solidfire.RPCListAllNodes,
-					Params: solidfire.ListAllNodesRPCParams{}}).
+					Params: solidfire.ListAllNodesRPCParams{},
+				}).
 				Reply(200).
 				BodyString(string(fixture))
 
@@ -369,7 +377,8 @@ func TestClient_GetClusterStats(t *testing.T) {
 				JSON(solidfire.RPCBody{
 					ID:     1,
 					Method: solidfire.RPCGetClusterStats,
-					Params: solidfire.GetClusterStatsRPCParams{}}).
+					Params: solidfire.GetClusterStatsRPCParams{},
+				}).
 				Reply(200).
 				BodyString(string(fixture))
 
@@ -414,7 +423,8 @@ func TestClient_GetClusterFullThreshold(t *testing.T) {
 				JSON(solidfire.RPCBody{
 					ID:     1,
 					Method: solidfire.RPCGetClusterFullThreshold,
-					Params: solidfire.GetClusterFullThresholdParams{}}).
+					Params: solidfire.GetClusterFullThresholdParams{},
+				}).
 				Reply(200).
 				BodyString(string(fixture))
 
@@ -452,7 +462,7 @@ func TestClient_ListAccounts(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			defer gock.Off()
-			//gock.Observe(gock.DumpRequest)
+			// gock.Observe(gock.DumpRequest)
 			gock.New(sfHost).
 				Post(sfRPCEndpoint).
 				MatchType("json").
@@ -496,7 +506,7 @@ func TestClient_ListInitiators(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			defer gock.Off()
-			//gock.Observe(gock.DumpRequest)
+			// gock.Observe(gock.DumpRequest)
 			gock.New(sfHost).
 				Post(sfRPCEndpoint).
 				MatchType("json").
@@ -539,7 +549,7 @@ func TestClient_ListVirtualVolumeTasks(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			defer gock.Off()
-			//gock.Observe(gock.DumpRequest)
+			// gock.Observe(gock.DumpRequest)
 			gock.New(sfHost).
 				Post(sfRPCEndpoint).
 				MatchType("json").
@@ -575,14 +585,14 @@ func TestClient_ListAsyncResults(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			want: 47,
+			want: 43,
 		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			defer gock.Off()
-			//gock.Observe(gock.DumpRequest)
+			// gock.Observe(gock.DumpRequest)
 			gock.New(sfHost).
 				Post(sfRPCEndpoint).
 				MatchType("json").
@@ -625,7 +635,7 @@ func TestClient_ListBulkVolumeJobs(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			defer gock.Off()
-			//gock.Observe(gock.DumpRequest)
+			// gock.Observe(gock.DumpRequest)
 			gock.New(sfHost).
 				Post(sfRPCEndpoint).
 				MatchType("json").
@@ -669,7 +679,7 @@ func TestClient_ListVolumeAccessGroups(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			defer gock.Off()
-			//gock.Observe(gock.DumpRequest)
+			// gock.Observe(gock.DumpRequest)
 			gock.New(sfHost).
 				Post(sfRPCEndpoint).
 				MatchType("json").

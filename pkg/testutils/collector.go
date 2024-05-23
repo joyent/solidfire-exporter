@@ -31,6 +31,7 @@ solidfire_cluster_last_sample_read_ops 0
 solidfire_cluster_last_sample_write_bytes 0
 solidfire_cluster_last_sample_write_ops 0
 solidfire_cluster_latency_seconds 0
+solidfire_cluster_max_async_result_id 47
 solidfire_cluster_max_iops 3000
 solidfire_cluster_max_metadata_over_provision_factor 5
 solidfire_cluster_max_over_provisionable_space_bytes 1.855425871872e+13
@@ -85,6 +86,12 @@ solidfire_cluster_volume_async_result_active{type="DriveAdd"} 0
 solidfire_cluster_volume_async_result_active{type="DriveRemoval"} 0
 solidfire_cluster_volume_async_result_active{type="NotClone"} 1
 solidfire_cluster_volume_async_result_active{type="RtfiPendingNode"} 0
+solidfire_cluster_volume_async_result{type="BulkVolume"} 0
+solidfire_cluster_volume_async_result{type="Clone"} 5
+solidfire_cluster_volume_async_result{type="DriveAdd"} 0
+solidfire_cluster_volume_async_result{type="DriveRemoval"} 0
+solidfire_cluster_volume_async_result{type="NotClone"} 2
+solidfire_cluster_volume_async_result{type="RtfiPendingNode"} 0
 solidfire_cluster_volume_bulk_volume_job_count 1
 solidfire_cluster_write_bytes_total 1.21720639488e+11
 solidfire_cluster_write_latency_seconds 0
@@ -315,6 +322,7 @@ solidfire_cluster_last_sample_read_ops 0
 solidfire_cluster_last_sample_write_bytes 0
 solidfire_cluster_last_sample_write_ops 0
 solidfire_cluster_latency_seconds 0
+solidfire_cluster_max_async_result_id 47
 solidfire_cluster_max_iops 3000
 solidfire_cluster_max_metadata_over_provision_factor 5
 solidfire_cluster_max_over_provisionable_space_bytes 1.855425871872e+13
@@ -369,6 +377,12 @@ solidfire_cluster_volume_async_result_active{type="DriveAdd"} 0
 solidfire_cluster_volume_async_result_active{type="DriveRemoval"} 0
 solidfire_cluster_volume_async_result_active{type="NotClone"} 1
 solidfire_cluster_volume_async_result_active{type="RtfiPendingNode"} 0
+solidfire_cluster_volume_async_result{type="BulkVolume"} 0
+solidfire_cluster_volume_async_result{type="Clone"} 5
+solidfire_cluster_volume_async_result{type="DriveAdd"} 0
+solidfire_cluster_volume_async_result{type="DriveRemoval"} 0
+solidfire_cluster_volume_async_result{type="NotClone"} 2
+solidfire_cluster_volume_async_result{type="RtfiPendingNode"} 0
 solidfire_cluster_volume_bulk_volume_job_count 1
 solidfire_cluster_write_bytes_total 1.21720639488e+11
 solidfire_cluster_write_latency_seconds 0

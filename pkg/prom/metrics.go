@@ -143,6 +143,8 @@ type Descriptions struct {
 	VirtualVolumeTasks     *prometheus.Desc
 	BulkVolumeJobs         *prometheus.Desc
 	AsyncResultsActive     *prometheus.Desc
+	AsyncResults           *prometheus.Desc
+	MaxAsyncResultID       *prometheus.Desc
 }
 
 func NewMetricDescriptions(namespace string) *Descriptions {
@@ -920,8 +922,20 @@ func NewMetricDescriptions(namespace string) *Descriptions {
 	)
 	d.AsyncResultsActive = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "cluster_volume_async_result_active"),
-		"The active jobs return by async results",
+		"The active jobs returned by async results",
 		[]string{"type"},
+		nil,
+	)
+	d.AsyncResults = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "cluster_volume_async_result"),
+		"All (active and completed) jobs returned by async results",
+		[]string{"type"},
+		nil,
+	)
+	d.MaxAsyncResultID = prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", "cluster_max_async_result_id"),
+		"The maximum id used by async result handles",
+		nil,
 		nil,
 	)
 
