@@ -17,11 +17,25 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
+type volumeMetadata struct {
+	VolumeId  string
+	Name      string
+	AccountId string
+}
+
+func (v *volumeMetadata) Values() []string {
+	return []string{
+		v.VolumeId,
+		v.Name,
+		v.AccountId,
+	}
+}
+
 type SolidfireCollector struct {
-	client          solidfire.Interface
-	timeout         time.Duration
-	volumeNamesByID map[int]string
-	nodesNamesByID  map[int]string
+	client             solidfire.Interface
+	timeout            time.Duration
+	volumeMetadataByID map[int]volumeMetadata
+	nodesNamesByID     map[int]string
 }
 type CollectorOpts struct {
 	Client  solidfire.Interface
@@ -183,7 +197,15 @@ func (c *SolidfireCollector) collectVolumeMeta(ctx context.Context, ch chan<- pr
 	volumeCntByStatus := map[string]int{}
 
 	for _, vol := range volumes.Result.Volumes {
-		c.volumeNamesByID[vol.VolumeID] = vol.Name
+		metadata := volumeMetadata{
+			Name:     vol.Name,
+			VolumeId: strconv.Itoa(vol.VolumeID),
+		}
+		ownerId, ok := vol.Attributes["owner_id"]
+		if ok {
+			metadata.AccountId = ownerId
+		}
+		c.volumeMetadataByID[vol.VolumeID] = metadata
 		volumeCntByStatus[vol.Status]++
 	}
 
@@ -244,134 +266,120 @@ func (c *SolidfireCollector) collectVolumeStats(ctx context.Context, ch chan<- p
 	mu.Lock()
 	defer mu.Unlock()
 	for _, vol := range volumeStats.Result.VolumeStats {
-		if ok, _ := regexp.MatchString(`snapshot-clone-src-*|replica-vol-*`, c.volumeNamesByID[vol.VolumeID]); ok {
+		metadata := c.volumeMetadataByID[vol.VolumeID]
+		name := metadata.Name
+		values := metadata.Values()
+
+		if ok, _ := regexp.MatchString(`snapshot-clone-src-*|replica-vol-*`, name); ok {
 			continue
 		}
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeActualIOPS,
 			prometheus.GaugeValue,
 			vol.ActualIOPS,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeAverageIOPSizeBytes,
 			prometheus.GaugeValue,
 			vol.AverageIOPSize,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeBurstIOPSCredit,
 			prometheus.GaugeValue,
 			vol.BurstIOPSCredit,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeClientQueueDepth,
 			prometheus.GaugeValue,
 			vol.ClientQueueDepth,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeLatencySeconds,
 			prometheus.GaugeValue,
 			MicrosecondsToSeconds(vol.LatencyUSec),
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeNonZeroBlocks,
 			prometheus.GaugeValue,
 			vol.NonZeroBlocks,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeReadBytesTotal,
 			prometheus.CounterValue,
 			vol.ReadBytes,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeReadLatencySecondsTotal,
 			prometheus.CounterValue,
 			MicrosecondsToSeconds(vol.ReadLatencyUSecTotal),
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeReadOpsTotal,
 			prometheus.CounterValue,
 			vol.ReadOps,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeThrottle,
 			prometheus.GaugeValue,
 			vol.Throttle,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeUnalignedReadsTotal,
 			prometheus.CounterValue,
 			vol.UnalignedReads,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeUnalignedWritesTotal,
 			prometheus.CounterValue,
 			vol.UnalignedWrites,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeSizeBytes,
 			prometheus.GaugeValue,
 			vol.VolumeSize,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeUtilization,
 			prometheus.GaugeValue,
 			vol.VolumeUtilization,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeWriteBytesTotal,
 			prometheus.CounterValue,
 			vol.WriteBytes,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeWriteLatencyTotal,
 			prometheus.CounterValue,
 			MicrosecondsToSeconds(vol.WriteLatencyUSecTotal),
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeWriteOpsTotal,
 			prometheus.CounterValue,
 			vol.WriteOps,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 
 		ch <- prometheus.MustNewConstMetric(
 			MetricDescriptions.VolumeStatsZeroBlocks,
 			prometheus.GaugeValue,
 			vol.ZeroBlocks,
-			strconv.Itoa(vol.VolumeID),
-			c.volumeNamesByID[vol.VolumeID])
+			values...)
 	}
 	return nil
 }
@@ -714,7 +722,10 @@ func (c *SolidfireCollector) collectVolumeQosHistograms(ctx context.Context, ch 
 	mu.Lock()
 	defer mu.Unlock()
 	for _, h := range VolumeQoSHistograms.Result.QosHistograms {
-		if ok, _ := regexp.MatchString(`snapshot-clone-src-*|replica-vol-*`, c.volumeNamesByID[h.VolumeID]); ok {
+		metadata := c.volumeMetadataByID[h.VolumeID]
+		name := metadata.Name
+		values := metadata.Values()
+		if ok, _ := regexp.MatchString(`snapshot-clone-src-*|replica-vol-*`, name); ok {
 			continue
 		}
 		// Below Min IOPS Percentage
@@ -731,9 +742,7 @@ func (c *SolidfireCollector) collectVolumeQosHistograms(ctx context.Context, ch 
 			0,
 			float64(sumHistogram(BelowMinIopsPercentages)),
 			BelowMinIopsPercentages,
-			strconv.Itoa(h.VolumeID),
-			c.volumeNamesByID[h.VolumeID],
-		)
+			values...)
 
 		MinToMaxIopsPercentages := map[float64]uint64{
 			19:          h.Histograms.MinToMaxIopsPercentages.Bucket1To19,
@@ -749,9 +758,7 @@ func (c *SolidfireCollector) collectVolumeQosHistograms(ctx context.Context, ch 
 			0,
 			float64(sumHistogram(MinToMaxIopsPercentages)),
 			MinToMaxIopsPercentages,
-			strconv.Itoa(h.VolumeID),
-			c.volumeNamesByID[h.VolumeID],
-		)
+			values...)
 
 		ReadBlockSizes := map[float64]uint64{
 			8191:        h.Histograms.ReadBlockSizes.Bucket4096To8191,
@@ -767,9 +774,7 @@ func (c *SolidfireCollector) collectVolumeQosHistograms(ctx context.Context, ch 
 			0,
 			float64(sumHistogram(ReadBlockSizes)),
 			ReadBlockSizes,
-			strconv.Itoa(h.VolumeID),
-			c.volumeNamesByID[h.VolumeID],
-		)
+			values...)
 
 		TargetUtilizationPercentages := map[float64]uint64{
 			0:           h.Histograms.TargetUtilizationPercentages.Bucket0,
@@ -786,8 +791,7 @@ func (c *SolidfireCollector) collectVolumeQosHistograms(ctx context.Context, ch 
 			0,
 			float64(sumHistogram(TargetUtilizationPercentages)),
 			TargetUtilizationPercentages,
-			strconv.Itoa(h.VolumeID),
-			c.volumeNamesByID[h.VolumeID],
+			values...,
 		)
 
 		ThrottlePercentages := map[float64]uint64{
@@ -804,8 +808,7 @@ func (c *SolidfireCollector) collectVolumeQosHistograms(ctx context.Context, ch 
 			0,
 			float64(sumHistogram(ThrottlePercentages)),
 			ThrottlePercentages,
-			strconv.Itoa(h.VolumeID),
-			c.volumeNamesByID[h.VolumeID],
+			values...,
 		)
 
 		WriteBlockSizes := map[float64]uint64{
@@ -822,8 +825,7 @@ func (c *SolidfireCollector) collectVolumeQosHistograms(ctx context.Context, ch 
 			0,
 			float64(sumHistogram(WriteBlockSizes)),
 			WriteBlockSizes,
-			strconv.Itoa(h.VolumeID),
-			c.volumeNamesByID[h.VolumeID],
+			values...,
 		)
 	}
 	return nil
@@ -1430,10 +1432,10 @@ func NewCollector(opts *CollectorOpts) (*SolidfireCollector, error) {
 		}
 	}
 	return &SolidfireCollector{
-		volumeNamesByID: make(map[int]string),
-		nodesNamesByID:  make(map[int]string),
-		client:          opts.Client,
-		timeout:         opts.Timeout,
+		volumeMetadataByID: make(map[int]volumeMetadata),
+		nodesNamesByID:     make(map[int]string),
+		client:             opts.Client,
+		timeout:            opts.Timeout,
 	}, nil
 }
 
