@@ -132,22 +132,21 @@ type ListVolumesResponse struct {
 	ID     int `json:"id"`
 	Result struct {
 		Volumes []struct {
-			Access     string `json:"access"`
-			AccountID  int    `json:"accountID"`
-			Attributes struct {
-			} `json:"attributes"`
-			BlockSize                   int         `json:"blockSize"`
-			CreateTime                  time.Time   `json:"createTime"`
-			CurrentProtectionScheme     string      `json:"currentProtectionScheme"`
-			DeleteTime                  string      `json:"deleteTime"`
-			Enable512E                  bool        `json:"enable512e"`
-			EnableSnapMirrorReplication bool        `json:"enableSnapMirrorReplication"`
-			Iqn                         string      `json:"iqn"`
-			LastAccessTime              time.Time   `json:"lastAccessTime"`
-			LastAccessTimeIO            time.Time   `json:"lastAccessTimeIO"`
-			Name                        string      `json:"name"`
-			PreviousProtectionScheme    interface{} `json:"previousProtectionScheme"`
-			PurgeTime                   string      `json:"purgeTime"`
+			Access                      string            `json:"access"`
+			AccountID                   int               `json:"accountID"`
+			Attributes                  map[string]string `json:"attributes"`
+			BlockSize                   int               `json:"blockSize"`
+			CreateTime                  time.Time         `json:"createTime"`
+			CurrentProtectionScheme     string            `json:"currentProtectionScheme"`
+			DeleteTime                  string            `json:"deleteTime"`
+			Enable512E                  bool              `json:"enable512e"`
+			EnableSnapMirrorReplication bool              `json:"enableSnapMirrorReplication"`
+			Iqn                         string            `json:"iqn"`
+			LastAccessTime              time.Time         `json:"lastAccessTime"`
+			LastAccessTimeIO            time.Time         `json:"lastAccessTimeIO"`
+			Name                        string            `json:"name"`
+			PreviousProtectionScheme    interface{}       `json:"previousProtectionScheme"`
+			PurgeTime                   string            `json:"purgeTime"`
 			Qos                         struct {
 				BurstIOPS int `json:"burstIOPS"`
 				BurstTime int `json:"burstTime"`

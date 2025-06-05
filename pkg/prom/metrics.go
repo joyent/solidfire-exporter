@@ -159,126 +159,126 @@ func NewMetricDescriptions(namespace string) *Descriptions {
 	d.VolumeActualIOPS = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_actual_iops"),
 		"The current actual IOPS to the volume in the last 500 milliseconds",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeAverageIOPSizeBytes = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_average_iop_size_bytes"),
 		"The average size in bytes of recent I/O to the volume in the last 500 milliseconds",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeBurstIOPSCredit = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_burst_iops_credit"),
 		"The total number of IOP credits available to the user. When volumes are not using up to the configured maxIOPS, credits are accrued.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeClientQueueDepth = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_client_queue_depth"),
 		"The number of outstanding read and write operations to the volume.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeLatencySeconds = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_latency_seconds"),
 		"The average time, in seconds, to complete operations to the volume in the last 500 milliseconds. A '0' (zero) value means there is no I/O to the volume.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeNonZeroBlocks = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_non_zero_blocks"),
 		"The total number of 4KiB blocks that contain data after the last garbage collection operation has completed.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeReadBytesTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_read_bytes_total"),
 		"The total cumulative bytes read from the volume since the creation of the volume.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeReadLatencySecondsTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_read_latency_seconds_total"),
 		"The total time spent performing read operations from the volume",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeReadOpsTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_read_ops_total"),
 		"The total read operations to the volume since the creation of the volume.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeThrottle = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_throttle"),
 		"A floating value between 0 and 1 that represents how much the system is throttling clients below their maxIOPS because of rereplication of data, transient errors, and snapshots taken.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeUnalignedReadsTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_unaligned_reads_total"),
 		"The total cumulative unaligned read operations to a volume since the creation of the volume.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeUnalignedWritesTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_unaligned_writes_total"),
 		"The total cumulative unaligned write operations to a volume since the creation of the volume.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeSizeBytes = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_size_bytes"),
 		"Total provisioned capacity in bytes.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeUtilization = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_utilization"),
 		"A floating value that describes how much the client is using the volume. Value 0: The client is not using the volume. Value 1: The client is using their maximum. Value 1+: The client is using their burst.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeWriteBytesTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_write_bytes_total"),
 		"The total cumulative bytes written to the volume since the creation of the volume.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeWriteLatencyTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_write_latency_seconds_total"),
 		"The total time spent performing write operations to the volume",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeWriteOpsTotal = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_write_ops_total"),
 		"The total cumulative write operations to the volume since the creation of the volume.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeStatsZeroBlocks = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_zero_blocks"),
 		"The total number of empty 4KiB blocks without data after the last round of garbage collection operation has completed.",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
@@ -527,42 +527,42 @@ func NewMetricDescriptions(namespace string) *Descriptions {
 	d.VolumeQoSBelowMinIopsPercentagesHistogram = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_qos_below_min_iops_percentage"),
 		"Volume QoS Below minimum IOPS percentage",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeQoSMinToMaxIopsPercentagesHistogram = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_qos_min_to_max_iops_percentage"),
 		"Volume QoS min to max IOPS percentage",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeQoSReadBlockSizesHistogram = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_qos_read_block_sizes_bytes"),
 		"Volume QoS read block sizes",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeQoSTargetUtilizationPercentagesHistogram = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_qos_target_utilization_percentage"),
 		"Volume QoS target utilization percentage",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeQoSThrottlePercentagesHistogram = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_qos_throttle_percentage"),
 		"Volume QoS throttle percentage",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 
 	d.VolumeQoSWriteBlockSizesHistogram = prometheus.NewDesc(
 		prometheus.BuildFQName(namespace, "", "volume_qos_write_block_sizes_bytes"),
 		"Volume QoS write block sizes",
-		[]string{"volume_id", "volume_name"},
+		[]string{"volume_id", "volume_name", "account_id"},
 		nil,
 	)
 

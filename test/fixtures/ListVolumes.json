@@ -5,7 +5,9 @@
       {
         "access": "readWrite",
         "accountID": 1,
-        "attributes": {},
+        "attributes": {
+          "owner_id": "test_owner"
+        },
         "blockSize": 4096,
         "createTime": "2021-03-09T04:40:43Z",
         "currentProtectionScheme": "singleHelix",
@@ -53,7 +55,9 @@
       {
         "access": "readWrite",
         "accountID": 1,
-        "attributes": {},
+        "attributes": {
+          "owner_id": "test_owner"
+        },
         "blockSize": 4096,
         "createTime": "2021-04-11T17:29:48Z",
         "currentProtectionScheme": "singleHelix",
